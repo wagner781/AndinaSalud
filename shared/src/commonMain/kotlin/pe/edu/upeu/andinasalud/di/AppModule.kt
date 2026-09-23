@@ -1,6 +1,7 @@
 package pe.edu.upeu.andinasalud.di
 
 import org.koin.core.context.startKoin
+import org.koin.core.context.GlobalContext
 import org.koin.dsl.module
 import pe.edu.upeu.andinasalud.data.repository.CitaRepositoryFake
 import pe.edu.upeu.andinasalud.domain.repository.CitaRepository
@@ -19,6 +20,8 @@ val appModule = module {
     factory { CitasViewModel(get()) }
 }
 
-fun initKoin() = startKoin {
-    modules(appModule)
+fun initKoin() {
+    if (GlobalContext.getOrNull() == null) {
+        startKoin { modules(appModule) }
+    }
 }
