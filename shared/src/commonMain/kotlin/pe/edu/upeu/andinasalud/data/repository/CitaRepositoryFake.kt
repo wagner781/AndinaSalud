@@ -38,4 +38,13 @@ class CitaRepositoryFake : CitaRepository {
         citas += cita
         return cita
     }
+
+    override suspend fun cancelarCita(id: String, motivo: String): Cita? {
+        val index = citas.indexOfFirst { it.id == id }
+        if (index < 0) return null
+        val actual = citas[index]
+        if (actual.estado !is EstadoCita.Programada) return null
+        return actual.copy(estado = EstadoCita.Cancelada(motivo, canceladaPorPaciente = true))
+            .also { citas[index] = it }
+    }
 }

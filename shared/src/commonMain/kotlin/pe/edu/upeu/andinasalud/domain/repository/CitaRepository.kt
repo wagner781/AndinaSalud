@@ -15,4 +15,5 @@ interface CitaRepository {
     suspend fun obtenerEspecialidades(): List<Especialidad>
     suspend fun obtenerMedicos(): List<Medico>
     suspend fun guardarCita(nuevaCita: NuevaCita): Cita
+    suspend fun cancelarCita(id: String, motivo: String): Cita?
 }
